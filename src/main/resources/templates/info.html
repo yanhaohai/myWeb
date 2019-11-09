@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>showdown</title>
+    <script type="text/javascript" src="js/showdown.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <!--	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            height: 1500px;
+            font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+            font-size: 20px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+
+        ul li {
+            line-height: 24px;
+        }
+
+        blockquote {
+            border-left: #eee solid 5px;
+            padding-left: 20px;
+        }
+
+        code {
+            display: block;
+            overflow-x: auto;
+            color: #abb2bf !important;
+            background: #282c34;
+        }
+
+        textarea {
+            height: 1400px;
+            width: 100%;
+            /*float: left;*/
+            outline: none;
+            resize: none;
+            border: none;
+            padding: 40px 40px 40px 80px;
+
+
+        }
+
+        #result {
+            border-left: 1px solid black;
+            float: left;
+            width: 50%;
+            height: 100%;
+
+            background-color: #fcfaf2;
+            text-align: left;
+            padding: 40px 40px 40px 80px;
+
+        }
+
+        #left {
+            float: left;
+            height: 100%;
+            width: 50%;
+            padding-top: 20px;
+            border-right: 1px solid #d9d9d9;
+            /*border-right-width: 1px;
+            border-right-style: solid;
+               border-right-color: rgb(217, 217, 217);*/
+        }
+    </style>
+
+</head>
+<body>
+<div id="left">
+    <form id="form" action="/fileUpload" method="post">
+        <input id="title" onkeyup="compile()" type="text" name="blogName"
+               th:value="${blog!=null}?${blog.blogName}:'请输入文件名'"
+               style="padding: 0px 80px 10px 40px;width: 100%; font-size: 30px;border: none;outline: none;line-height: 30px">
+        <input id="blog" type="hidden" name="blog">
+        <div style="width: 100%;height: 40px;background-color: grey;text-align: center;font-size: 28px;">
+            待添加功能
+            <input onclick="blogUp()" type="button" value="保存" class="btn btn-success"
+                   style="width: 80px;height: 100%;float: right;">
+        </div>
+        <textarea name="blogPaper" id="content" th:text="${blog!=null}?${blog.blogPaper}:''"
+                  onkeyup="compile()"></textarea>
+    </form>
+</div>
+<div id="result">
+</div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        compile();
+    })
+
+    function blogUp() {
+        if ($("#title").val() == "") {
+            //如果文件名为空则提示并退出
+            alert("文件名不可为空");
+            return;
+        }
+        $.ajax({
+            url: "/fileUpload",
+            type: "post",
+            data: {
+                "blogName": $("#title").val(),
+                "blogPaper": $("#content").val()
+            },
+            success: function (data) {
+                if (data == "success") {
+                    alert("成功保存");
+                }
+            }
+        });
+
+    }
+
+    function compile() {
+        var title = document.getElementById("title").value;
+        title = "<h1>" + title + "</h1>";
+        var text = document.getElementById("content").value;
+        var converter = new showdown.Converter();
+        var html = converter.makeHtml(title + text);
+        document.getElementById("result").innerHTML = html;
+    }
+</script>
+</body>
+</html>

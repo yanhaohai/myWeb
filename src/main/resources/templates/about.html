@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>关于我</title>
+<meta name="keywords" content="blog" />
+<meta name="description" content="blog" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/base.css" rel="stylesheet">
+<link href="css/m.css" rel="stylesheet">
+<script src="js/jquery-1.8.3.min.js" ></script>
+<script src="js/comm.js"></script>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<!--top begin-->
+<div th:replace="header::header"></div>
+<div class="searchbox">
+  <div class="search">
+    <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+      <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onFocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onBlur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+      <input name="show" value="title" type="hidden">
+      <input name="tempid" value="1" type="hidden">
+      <input name="tbname" value="news" type="hidden">
+      <input name="Submit" class="input_submit" value="搜索" type="submit">
+    </form>
+  </div>
+  <div class="searchclose"></div>
+</div>
+<!--top end-->
+<article>
+  <div class="whitebg about" style="padding: 20px">
+    <div class="ab_box">
+      <div style="float: left;padding-left: 16px;">
+        <h1>严昊海</h1>
+        <h2 style="margin-top: 35px;">java程序员</h2>
+      </div>
+      <div style="width: 150px;height: 150px;float: right;margin-right: 50px;" >
+<!--        <img src="images/header.jpg" style="width: 100%;height: 100%;">-->
+      </div>
+    </div>
+    <h2 class="gd_title">自我介绍</h2><br>
+    <p class="ab_dubai">我叫严昊海，来自江西赣州，17年毕业于江西应用科技学院计算机网络专业。
+    </p><br>
+    <span class="ly_button"><a href="http://www.yangqq.com/e/tool/gbook/?bid=1" target="_blank">留言</a></span>
+    <h2 class="gd_title">心路历程</h2>
+    <h3>
+
+    </h3>
+
+
+  </div>
+</article>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>个人博客</title>
+    <meta name="keywords" content="blog"/>
+    <meta name="description" content="blog"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/m.css" rel="stylesheet">
+<!--    <link href="css/bootstrap.css" rel="stylesheet">-->
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/showdown.min.js"></script>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"-->
+<!--          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <script src="js/comm.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/modernizr.js"></script>
+    <![endif]-->
+    <style>
+
+        #write {
+            margin-top: 32px;
+            height: 40px;
+            float: right;
+        }
+        #write a {
+            text-decoration: none;
+            background: #2f435e;
+            color: #f2f2f2;
+            padding: 10px 30px 10px 30px;
+            font-size: 16px;
+            font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;
+            font-weight: bold;
+            border-radius: 3px;
+            -webkit-transition: all linear 0.30s;
+            -moz-transition: all linear 0.30s;
+            transition: all linear 0.30s;
+
+        }
+        #write a:hover {
+            background: #385f9e;
+        }
+    </style>
+    <script>
+        $(function () {
+
+            //alert(html);
+            var mark = $(".markdown");
+            var converter = new showdown.Converter();
+            //alert();
+            for (var i = 0; i <mark.length;i++){
+                //将markdown文本全部转换为正常文本
+
+                $(mark[i]).html(converter.makeHtml(mark[i].innerHTML));
+                var html = $(mark[i]).text();
+                $(mark[i]).text(html);
+            }
+            // var title = document.getElementById("title").value;
+            // title = "<h1>"+title+"</h1>";
+            // var text = document.getElementById("content").value;
+            // var converter = new showdown.Converter();
+            // var html = converter.makeHtml(title+text);
+            // document.getElementById("result").innerHTML = html;
+        })
+    </script>
+</head>
+<body>
+<!--top begin-->
+<div th:replace="header::header"></div>
+<div class="searchbox">
+    <div class="search">
+        <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);"
+                   onFocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}"
+                   onBlur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+            <input name="show" value="title" type="hidden">
+            <input name="tempid" value="1" type="hidden">
+            <input name="tbname" value="news" type="hidden">
+            <input name="Submit" class="input_submit" value="搜索" type="submit">
+        </form>
+    </div>
+    <div class="searchclose"></div>
+</div>
+<!--top end-->
+<article>
+    <!--lbox begin-->
+    <div class="lbox">
+        <div class="whitebg lanmu"><img src="images/lm01.jpg">
+            <h1>个人博客</h1>
+            <p>个人博客,记录学习和使用的技术，并总结</p>
+            <div id="write">
+                <a id="" th:href="@{/info.html}">写博客</a>
+            </div>
+        </div>
+        <div class="whitebg bloglist">
+            <h2 class="htitle">最新博文</h2>
+            <ul>
+                <li th:if="${blogLimit!=null}" th:each="blog:${blogLimit.blogList}">
+                    <h3 class="blogtitle"><a th:href="@{/downBlog?blogName=}+${blog.blogName}" target="_blank">[[${blog.blogName}]]</a></h3>
+                    <p class="blogtext markdown" th:text="${blog.blogPaper}"></p>
+                    <p class="bloginfo"><i class="avatar"><img src="images/a.jpg"></i>
+                        <span>严昊海</span>
+                        <span th:text="${#dates.format(blog.createTime,'yyyy-MM-dd')}"></span>
+                        <span >点击数: [[${blog.click}]]</span>
+                    </p>
+                    <a th:href="@{/downBlog?blogName=}+${blog.blogName}" class="viewmore">阅读更多</a>
+                </li>
+            </ul>
+            <!--pagelist-->
+            <div class="pagelist">&nbsp;&nbsp;&nbsp;
+                <a th:if="${blogLimit.currentPage!=1}" th:href="@{/blogLimitList?currentPage=}+${blogLimit.currentPage-1}">上一页</a>&nbsp;
+                <a th:each="index:${blogLimit.pageCount}" href="/download/index_2.html">[[${index}]]</a>&nbsp;&nbsp;
+                <a href="/download/index_2.html">下一页</a>&nbsp;
+                <a href="/download/index_3.html">尾页</a>
+                <b style="background-color: #4fa5d7">总页数：[[${blogLimit.pageCount}]]</b>
+            </div>
+            <!--pagelist end-->
+        </div>
+
+        <!--bloglist end-->
+    </div>
+    <div class="rbox">
+        <div class="whitebg paihang">
+            <h2 class="htitle">点击排行</h2>
+            <section class="topnews imgscale"><a href="/"><img src="images/h1.jpg"><span>最受欢迎的博客</span></a>
+            </section>
+            <ul>
+                <li th:if="${top10_blogs!=null}" th:each="blog:${top10_blogs}">
+                    <i></i><a th:href="@{/downBlog?blogName=}+${blog.blogName}">[[${blog.blogName}]]</a></li>
+            </ul>
+        </div>
+        <div class="whitebg tuijian">
+            <h2 class="htitle">本栏推荐</h2>
+            <section class="topnews imgscale"><a href="/"><img src="images/h2.jpg"><span>6条网页设计配色原则,让你秒变配色高手</span></a>
+            </section>
+            <ul>
+                <li><a href="/"><i><img src="images/text01.jpg"></i>
+                    <p>十条设计原则教你学会如何设计网页布局!</p>
+                </a></li>
+                <li><a href="/"><i><img src="images/text02.jpg"></i>
+                    <p>用js+css3来写一个手机栏目导航</p>
+                </a></li>
+                <li><a href="/"><i><img src="images/text03.jpg"></i>
+                    <p>6条网页设计配色原则,让你秒变配色高手</p>
+                </a></li>
+                <li><a href="/"><i><img src="images/text04.jpg"></i>
+                    <p>三步实现滚动条触动css动画效果</p>
+                </a></li>
+                <li><a href="/"><i><img src="images/text05.jpg"></i>
+                    <p>个人博客，属于我的小世界！</p>
+                </a></li>
+                <li><a href="/"><i><img src="images/text06.jpg"></i>
+                    <p>安静地做一个爱设计的女子</p>
+                </a></li>
+                <li><a href="/"><i><img src="images/text07.jpg"></i>
+                    <p>个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</p>
+                </a></li>
+            </ul>
+        </div>
+        <div class="ad whitebg imgscale">
+            <ul>
+                <a href="/"><img src="images/ad.jpg"></a>
+            </ul>
+        </div>
+        <div class="whitebg cloud">
+            <h2 class="htitle">标签云</h2>
+            <ul>
+                <a href="" target="_blank">个人博客模板</a> <a href="" target="_blank">css动画</a> <a href=""
+                                                                                              target="_blank">布局</a> <a
+                    href="" target="_blank">今夕何夕</a> <a href="" target="_blank">SEO</a> <a href=""
+                                                                                           target="_blank">女程序员</a> <a
+                    href="" target="_blank">小世界</a> <a href="" target="_blank">个人博客</a> <a href=""
+                                                                                           target="_blank">网页设计</a>
+            </ul>
+        </div>
+        <div class="whitebg wenzi">
+            <h2 class="htitle">猜你喜欢</h2>
+            <ul>
+                <li><a href="/">十条设计原则教你学会如何设计网页布局!</a></li>
+                <li><a href="/">用js+css3来写一个手机栏目导航</a></li>
+                <li><a href="/">6条网页设计配色原则,让你秒变配色高手</a></li>
+                <li><a href="/">三步实现滚动条触动css动画效果</a></li>
+                <li><a href="/">个人博客，属于我的小世界！</a></li>
+                <li><a href="/">安静地做一个爱设计的女子</a></li>
+                <li><a href="/">个人网站做好了，百度不收录怎么办？来，看看他们怎么做的。</a></li>
+                <li><a href="/">做个人博客如何用帝国cms美化留言增加头像选择</a></li>
+            </ul>
+        </div>
+        <div class="ad whitebg imgscale">
+            <ul>
+                <a href="/"><img src="images/ad02.jpg"></a>
+            </ul>
+        </div>
+        <div class="whitebg tongji">
+            <h2 class="htitle">站点信息</h2>
+            <ul>
+                <li><b>建站时间</b>：2018-10-24</li>
+                <li><b>网站程序</b>：帝国cms</li>
+                <li><b>主题模板</b>：<a href="http://www.yangqq.com" target="_blank">《今夕何夕》</a></li>
+                <li><b>文章统计</b>：299条</li>
+                <li><b>文章评论</b>：490条</li>
+                <li><b>统计数据</b>：<a href="/">百度统计</a></li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+</body>
+</html>

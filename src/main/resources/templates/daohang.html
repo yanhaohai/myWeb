@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>收藏博客</title>
+<meta name="keywords" content="blog" />
+<meta name="description" content="blog" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/base.css" rel="stylesheet">
+<link href="css/m.css" rel="stylesheet">
+<script src="js/jquery-1.8.3.min.js" ></script>
+<script src="js/comm.js"></script>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<!--top begin-->
+<div th:replace="header::header"></div>
+<div class="searchbox">
+  <div class="search">
+    <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+      <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onFocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onBlur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+      <input name="show" value="title" type="hidden">
+      <input name="tempid" value="1" type="hidden">
+      <input name="tbname" value="news" type="hidden">
+      <input name="Submit" class="input_submit" value="搜索" type="submit">
+    </form>
+  </div>
+  <div class="searchclose"></div>
+</div>
+<!--top end-->
+<article>
+  <div class="whitebg">
+    <h2 class="htitle"><span class="hnav">可能，你觉得自己没有足够得优秀，但我始终相信你仍然在努力坚持着!</span>站长推荐</h2>
+    <ul class="site_tj">
+      <li><a href="https://www.lovey9.com/" target="_blank" title="葛优个人博客">葛优个人博客</a></li>
+      <li><a href="http://www.baiyangseo.com/" target="_blank" title="白杨SEO博客">白杨SEO博客</a></li>
+
+    </ul>
+  </div>
+  <div class="whitebg">
+    <h2 class="htitle"><span class="hnav"><a href="/" target="_blank">提交链接</a></span>优秀个人博客</h2>
+    <ul class="site_tj site_yx">
+      <li><a href="https://www.link-nemo.com" target="_blank" title="id=11 LinkNemo博客">LinkNemo博客</a></li>
+      <li><a href="http://www.liangzl.com" target="_blank" title="id=12 梁钟霖个人博客">梁钟霖个人博客</a></li>
+      <li><a href="http://www.dxblog.cn" target="_blank" title="id=16 东轩博客">东轩博客</a></li>
+
+
+    </ul>
+  </div>
+</article>
+</body>
+</html>

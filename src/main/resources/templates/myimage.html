@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>我的图片</title>
+  <meta name="keywords" content="blog"/>
+  <meta name="description" content="blog"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/base.css" rel="stylesheet">
+  <link href="css/m.css" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" th:href="@{css/animate.css}" href="css/animate.css">
+  <!-- Icomoon Icon Fonts-->
+  <link rel="stylesheet" th:href="@{css/icomoon.css}" href="css/icomoon.css">
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" th:href="@{css/magnific-popup.css}" href="css/magnific-popup.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" th:href="@{css/salvattore.css}" href="css/salvattore.css">
+  <!-- Theme Style -->
+  <link rel="stylesheet" th:href="@{css/style.css}" href="css/style.css">
+  <script src="js/modernizr-2.6.2.min.js"></script>
+  <!-- FOR IE9 below -->
+  <!--[if lt IE 9]>
+  <script src="js/respond.min.js"></script>
+  <script src="js/jquery-1.8.3.min.js"></script>
+  <script src="js/comm.js"></script>
+  <![endif]-->
+</head>
+<body>
+<!--top begin-->
+<div th:replace="header::#header(uri='myimage')"></div>
+<div class="searchbox">
+  <div class="search" id="o">
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data" style="background-color: white;">
+      <input type="file" name="file"><input type="text" name="des">
+      <input type="submit" value="上传">
+    </form>
+  </div>
+  <div class="searchclose"></div>
+</div>
+<!--top end-->
+<article>
+  <div id="fh5co-main" style="padding-top: 0px;">
+    <div class="container">
+
+      <div class="row">
+
+        <div id="fh5co-board" data-columns>
+
+          <div class="item" th:if="${images!=null}" th:each="image:${images}">
+            <div class="animate-box">
+              <a th:href="${image.url}" class="image-popup fh5co-board-img" th:title="${image.des}"><img th:src="${image.url}" th:alt="${image.des}"></a>
+            </div>
+            <div class="fh5co-desc">[[${image.des}]]</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+<script>
+  window.onload=function (ev) {
+    var i = document.getElementsByClassName("searchico");
+    i[0].onclick=function () {
+      document.getElementById("o").className+=" open";
+    };
+    var close = document.getElementsByClassName("searchclose");
+    close[0].onclick=function () {
+      document.getElementById("o").setAttribute("class","search");
+    };
+  }
+</script>
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Waypoints -->
+<script src="js/jquery.waypoints.min.js"></script>
+<!-- Magnific Popup -->
+<script src="js/jquery.magnific-popup.min.js"></script>
+<!-- Salvattore -->
+<script src="js/salvattore.min.js"></script>
+<!-- Main JS -->
+<script src="js/main.js"></script>
+</body>
+</html>

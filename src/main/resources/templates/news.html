@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>新闻详情</title>
+    <meta name="keywords" content="blog" />
+    <meta name="description" content="blog" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/base.css" th:href="@{/css/base.css}" rel="stylesheet">
+    <link href="css/m.css" th:href="@{/css/m.css}" rel="stylesheet">
+    <script src="js/jquery-1.8.3.min.js" th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <script src="js/comm.js" ></script>
+    <!--[if lt IE 9]>
+    <script src="js/modernizr.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<article>
+
+    <div class="whitebg" style="margin-top: 50px">
+        <h2 class="htitle" style="text-align: center"><b style="font-size: 20px">[[${news.title}]]</b></h2>
+       <div th:id="news" th:text="${news.newPaper}"></div>
+    </div>
+</article>
+<script type="text/javascript">
+    $(function () {
+        var text = $("#news").text();
+        $("#news").html(text);
+    })
+</script>
+</body>
+</html>
